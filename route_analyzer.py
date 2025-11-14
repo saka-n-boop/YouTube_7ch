@@ -3,7 +3,8 @@ import json
 import gspread
 from google.oauth2.service_account import Credentials
 import google.generativeai as genai
-from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
+# 修正: YouTubeTranscriptApiのインポート方法を変更し、モジュール全体をロード
+import youtube_transcript_api as yta 
 from typing import List, Dict, Optional
 
 # --- 設定値 ---
@@ -12,6 +13,9 @@ URL_COLUMN_INDEX = 4    # E列 (0から数えて4)
 START_COLUMN_INDEX = 12 # M列
 END_COLUMN_INDEX = 23   # X列
 WAYPOINT_COLUMNS_INDICES = list(range(13, 23)) # N列(13)からW列(22)まで
+
+# TranscriptsDisabledエラーをモジュールから取得
+TranscriptsDisabled = yta.TranscriptsDisabled
 
 # --- APIクライアント初期化 ---
 try:
@@ -59,8 +63,8 @@ def get_video_id(url: str) -> Optional[str]:
 def get_transcript(video_id: str) -> Optional[str]:
     """YouTube動画のトランスクリプトを取得する"""
     try:
-        # 正しい関数名: YouTubeTranscriptApi.get_transcript を使用
-        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['ja', 'en']) 
+        # YouTubeTranscriptApiを新しいインポート名(yta)で参照
+        transcript_list = yta.YouTubeTranscriptApi.get_transcript(video_id, languages=['ja', 'en']) 
         
         # 結果はリストで返ってくるため、そのまま結合する
         full_transcript = " ".join([item['text'] for item in transcript_list])
@@ -125,7 +129,7 @@ def main():
     print("--- YouTube Route Analyzer Start ---")
 
     try:
-        # gspreadクライアントでスプレッドシートを開く (open_by_key()に修正)
+        # gspreadクライアントでスプレッドシートを開く (open_by_key()を使用)
         sheet = gc.open_by_key(SPREADSHEET_ID).sheet1
         
         # 全データを取得し、ヘッダー行(1行目)をスキップ
