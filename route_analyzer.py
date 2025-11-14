@@ -119,7 +119,7 @@ def main():
 
     try:
         # gspreadクライアントでスプレッドシートを開く
-        sheet = gc.open_by_id(SPREADSHEET_ID).sheet1
+        sheet = gc.open_by_key(SPREADSHEET_ID).trial
         
         # 全データを取得し、ヘッダー行(1行目)をスキップ
         all_data = sheet.get_all_values()
