@@ -2,7 +2,7 @@ import os
 import json
 import gspread
 from google.oauth2.service_account import Credentials
-from google_genai import GoogleGenAI
+from google_generativeai import GoogleGenAI
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 from typing import List, Dict, Optional
 
