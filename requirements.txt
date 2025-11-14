@@ -6,8 +6,7 @@ oauth2client
 # YouTubeのトランスクリプト取得に特化したライブラリ
 youtube-transcript-api
 
-# Gemini API (分析)
-google-genaigoogle-generativeai
+google-generativeai
 
 # 必要であれば、汎用的なHTTP通信ライブラリ
 requests
